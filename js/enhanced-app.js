@@ -52,63 +52,87 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Enhanced Create Courts of Heaven Prayer
-    function createEnhancedCourtsPrayer(topic) {
-        // Select random scripture for each section
-        const approachVerse = getRandomItem(scriptures.approaching);
-        const honorVerse = getRandomItem(scriptures.honoring);
-        const confessionVerse = getRandomItem(scriptures.confession);
-        const presentingVerse = getRandomItem(scriptures.presenting);
-        const silencingVerse = getRandomItem(scriptures.silencing);
-        const judgmentVerse = getRandomItem(scriptures.judgment);
-        const verdictVerse = getRandomItem(scriptures.verdict);
-        const angelsVerse = getRandomItem(scriptures.angels);
-        
-        // Select random intro and closing
-        const intro = getRandomItem(prayerIntros);
-        const closing = getRandomItem(prayerClosings);
-        
-        // Select random templates for each section
-        const approachingTemplate = getRandomItem(approachingTemplates || ["I stand before Your throne of grace with confidence, knowing that You welcome me into Your courts. As Your Word says, &quot;[VERSE]&quot; [REFERENCE]."]);
-        const honoringTemplate = getRandomItem(honoringTemplates || ["I honor You as the righteous Judge of all the earth, the King of Kings and Lord of Lords. &quot;[VERSE]&quot; [REFERENCE]. You alone are worthy of all praise and glory."]);
-        const confessionTemplate = getRandomItem(confessionTemplates || ["Before presenting my case, I confess any sin or iniquity in my life. I repent and turn away from anything that separates me from Your presence. Your Word promises, &quot;[VERSE]&quot; [REFERENCE]."]);
-        const presentingTemplate = getRandomItem(presentingTemplates || ["Lord, I bring before Your court my petition regarding [TOPIC]. I present this matter to You, knowing that &quot;[VERSE]&quot; [REFERENCE]. I ask for Your divine intervention and wisdom in this situation."]);
-        const silencingTemplate = getRandomItem(silencingTemplates || ["I silence every voice of the accuser that speaks against me in this matter. By the authority of Jesus Christ, I declare, &quot;[VERSE]&quot; [REFERENCE]. No weapon formed against me shall prosper."]);
-        const judgmentTemplate = getRandomItem(judgmentTemplates || ["Righteous Judge, I ask for Your divine judgment regarding [TOPIC]. Render Your verdict according to Your perfect will and justice. &quot;[VERSE]&quot; [REFERENCE]."]);
-        const verdictTemplate = getRandomItem(verdictTemplates || ["By faith, I receive Your verdict and decree over this situation. I trust in Your goodness and mercy, for &quot;[VERSE]&quot; [REFERENCE]. I accept Your decision with gratitude."]);
-        const angelsTemplate = getRandomItem(angelsTemplates || ["Lord, I ask that You dispatch Your angels to carry out Your verdict concerning [TOPIC]. Your Word declares, &quot;[VERSE]&quot; [REFERENCE]. Send them now to minister on my behalf."]);
-        
-        // Build prayer with all 8 components
-        let prayer = `<p class="prayer-intro">${intro}</p>`;
-        
-        // 1. Approaching God's throne
-        prayer += `<p class="prayer-section">${processTemplate(approachingTemplate, approachVerse.verse, approachVerse.reference)}</p>`;
-        
-        // 2. Honoring Him
-        prayer += `<p class="prayer-section">${processTemplate(honoringTemplate, honorVerse.verse, honorVerse.reference)}</p>`;
-        
-        // 3. Confession and repentance
-        prayer += `<p class="prayer-section">${processTemplate(confessionTemplate, confessionVerse.verse, confessionVerse.reference)}</p>`;
-        
-        // 4. Presenting your case
-        prayer += `<p class="prayer-section">${processTemplate(presentingTemplate, presentingVerse.verse, presentingVerse.reference, topic)}</p>`;
-        
-        // 5. Silencing the accuser
-        prayer += `<p class="prayer-section">${processTemplate(silencingTemplate, silencingVerse.verse, silencingVerse.reference)}</p>`;
-        
-        // 6. Asking for judgment
-        prayer += `<p class="prayer-section">${processTemplate(judgmentTemplate, judgmentVerse.verse, judgmentVerse.reference, topic)}</p>`;
-        
-        // 7. Receiving the verdict
-        prayer += `<p class="prayer-section">${processTemplate(verdictTemplate, verdictVerse.verse, verdictVerse.reference)}</p>`;
-        
-        // 8. Dispatching angels
-        prayer += `<p class="prayer-section">${processTemplate(angelsTemplate, angelsVerse.verse, angelsVerse.reference, topic)}</p>`;
-        
-        // Closing
-        prayer += `<p class="prayer-closing">${closing}</p>`;
-        
-        return prayer;
-    }
+function createEnhancedCourtsPrayer(topic) {
+    // Select random scripture for each section
+    const approachVerse = getRandomItem(scriptures.approaching);
+    const honorVerse = getRandomItem(scriptures.honoring);
+    const confessionVerse = getRandomItem(scriptures.confession);
+    const presentingVerse = getRandomItem(scriptures.presenting);
+    const silencingVerse = getRandomItem(scriptures.silencing);
+    const judgmentVerse = getRandomItem(scriptures.judgment);
+    const verdictVerse = getRandomItem(scriptures.verdict);
+    const angelsVerse = getRandomItem(scriptures.angels);
+    
+    // Select random intro and closing
+    const intro = getRandomItem(prayerIntros);
+    const closing = getRandomItem(prayerClosings);
+    
+    // Create array of scripture transitions
+    const transitions = [
+        "As Your Word says, ",
+        "Your Word declares, ",
+        "Scripture reminds us, ",
+        "As it is written, ",
+        "Your Word tells us, ",
+        "As the Bible states, ",
+        "In Your Word I read, ",
+        "Your Scripture assures me, ",
+        "As You have revealed in Your Word, ",
+        "The Bible promises, "
+    ];
+    
+    // Select random transitions for each section
+    const approachTransition = getRandomItem(transitions);
+    const honorTransition = getRandomItem(transitions);
+    const confessionTransition = getRandomItem(transitions);
+    const presentingTransition = getRandomItem(transitions);
+    const silencingTransition = getRandomItem(transitions);
+    const judgmentTransition = getRandomItem(transitions);
+    const verdictTransition = getRandomItem(transitions);
+    const angelsTransition = getRandomItem(transitions);
+    
+    // Select random templates for each section
+    const approachingTemplate = getRandomItem(approachingTemplates || [`I stand before Your throne of grace with confidence, knowing that You welcome me into Your courts. ${approachTransition}&quot;[VERSE]&quot; [REFERENCE].`]);
+    const honoringTemplate = getRandomItem(honoringTemplates || [`I honor You as the righteous Judge of all the earth, the King of Kings and Lord of Lords. ${honorTransition}&quot;[VERSE]&quot; [REFERENCE]. You alone are worthy of all praise and glory.`]);
+    const confessionTemplate = getRandomItem(confessionTemplates || [`Before presenting my case, I confess any sin or iniquity in my life. I repent and turn away from anything that separates me from Your presence. ${confessionTransition}&quot;[VERSE]&quot; [REFERENCE].`]);
+    const presentingTemplate = getRandomItem(presentingTemplates || [`Lord, I bring before Your court my petition regarding [TOPIC]. I present this matter to You, knowing that ${presentingTransition}&quot;[VERSE]&quot; [REFERENCE]. I ask for Your divine intervention and wisdom in this situation.`]);
+    const silencingTemplate = getRandomItem(silencingTemplates || [`I silence every voice of the accuser that speaks against me in this matter. By the authority of Jesus Christ, I declare, ${silencingTransition}&quot;[VERSE]&quot; [REFERENCE]. No weapon formed against me shall prosper.`]);
+    const judgmentTemplate = getRandomItem(judgmentTemplates || [`Righteous Judge, I ask for Your divine judgment regarding [TOPIC]. Render Your verdict according to Your perfect will and justice. ${judgmentTransition}&quot;[VERSE]&quot; [REFERENCE].`]);
+    const verdictTemplate = getRandomItem(verdictTemplates || [`By faith, I receive Your verdict and decree over this situation. I trust in Your goodness and mercy, for ${verdictTransition}&quot;[VERSE]&quot; [REFERENCE]. I accept Your decision with gratitude.`]);
+    const angelsTemplate = getRandomItem(angelsTemplates || [`Lord, I ask that You dispatch Your angels to carry out Your verdict concerning [TOPIC]. ${angelsTransition}&quot;[VERSE]&quot; [REFERENCE]. Send them now to minister on my behalf.`]);
+    
+    // Build prayer with all 8 components
+    let prayer = `<p class="prayer-intro">${intro}</p>`;
+    
+    // 1. Approaching God's throne
+    prayer += `<p class="prayer-section">${processTemplate(approachingTemplate, approachVerse.verse, approachVerse.reference)}</p>`;
+    
+    // 2. Honoring Him
+    prayer += `<p class="prayer-section">${processTemplate(honoringTemplate, honorVerse.verse, honorVerse.reference)}</p>`;
+    
+    // 3. Confession and repentance
+    prayer += `<p class="prayer-section">${processTemplate(confessionTemplate, confessionVerse.verse, confessionVerse.reference)}</p>`;
+    
+    // 4. Presenting your case
+    prayer += `<p class="prayer-section">${processTemplate(presentingTemplate, presentingVerse.verse, presentingVerse.reference, topic)}</p>`;
+    
+    // 5. Silencing the accuser
+    prayer += `<p class="prayer-section">${processTemplate(silencingTemplate, silencingVerse.verse, silencingVerse.reference)}</p>`;
+    
+    // 6. Asking for judgment
+    prayer += `<p class="prayer-section">${processTemplate(judgmentTemplate, judgmentVerse.verse, judgmentVerse.reference, topic)}</p>`;
+    
+    // 7. Receiving the verdict
+    prayer += `<p class="prayer-section">${processTemplate(verdictTemplate, verdictVerse.verse, verdictVerse.reference)}</p>`;
+    
+    // 8. Dispatching angels
+    prayer += `<p class="prayer-section">${processTemplate(angelsTemplate, angelsVerse.verse, angelsVerse.reference, topic)}</p>`;
+    
+    // Closing
+    prayer += `<p class="prayer-closing">${closing}</p>`;
+    
+    return prayer;
+}
     
     // Helper function to process templates
     function processTemplate(template, verse, reference, topic = null) {
