@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     generateBtn.addEventListener('click', generatePrayer);
     saveBtn.addEventListener('click', savePrayer);
     clearSavedBtn.addEventListener('click', clearSavedPrayers);
-
-    // Add this code after your existing event listeners
-    prayerForm.addEventListener('submit', function(event) {
-    // Prevent the default form submission
-    event.preventDefault();
     
-    // Call the same function that the button click calls
-    generatePrayer();
+    // Add form submit event listener for Enter key
+    prayerForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        
+        // Call the generatePrayer function
+        generatePrayer();
     });
     
     // Generate Prayer Function
