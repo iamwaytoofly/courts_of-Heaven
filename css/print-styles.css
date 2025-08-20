@@ -1,0 +1,93 @@
+/* Print styles for Courts of Heaven Prayer App */
+
+@media print {
+    /* Hide everything except the prayer content */
+    header, 
+    .app-description, 
+    .prayer-generator, 
+    .saved-prayers, 
+    footer, 
+    .prayer-actions {
+        display: none !important;
+    }
+    
+    /* Show only the prayer content */
+    .prayer-output {
+        display: block !important;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .prayer-content {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Add a title for the printed page */
+    .prayer-content:before {
+        content: "Courts of Heaven Prayer";
+        display: block;
+        font-size: 18pt;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    /* Clean styling for the prayer text */
+    .prayer-text {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+    
+    /* Remove any decorative elements */
+    .prayer-section:before {
+        display: none;
+    }
+    
+    /* Ensure page breaks don't occur in the middle of prayer sections */
+    .prayer-section {
+        page-break-inside: avoid;
+    }
+    
+    /* Add some spacing between sections */
+    .prayer-section {
+        margin-bottom: 1em;
+    }
+    
+    /* Style the prayer intro and closing */
+    .prayer-intro, .prayer-closing {
+        font-style: italic;
+        text-align: center;
+        margin: 1.5em 0;
+    }
+    
+    /* Add a footer with the date */
+    .prayer-text:after {
+        content: "Generated on " attr(data-date);
+        display: block;
+        text-align: center;
+        margin-top: 2em;
+        font-size: 10pt;
+        color: #666;
+    }
+    
+    /* Hide any buttons */
+    button {
+        display: none !important;
+    }
+    
+    /* Set page margins */
+    @page {
+        margin: 0.5in;
+    }
+    
+    /* Set body styles */
+    body {
+        font-family: serif;
+        line-height: 1.5;
+    }
+}
