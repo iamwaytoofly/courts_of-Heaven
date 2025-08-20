@@ -128,16 +128,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Print Prayer Function
     function printPrayer() {
-        const topic = topicInput.value.trim();
-        const prayerContent = prayerText.innerHTML;
-        
-        if (!prayerContent) {
-            alert('No prayer to print');
-            return;
-        }
-        
+    console.log("Print button clicked!"); // Debug message
+    const topic = topicInput.value.trim();
+    const prayerContent = prayerText.innerHTML;
+    
+    if (!prayerContent) {
+        alert('No prayer to print');
+        return;
+    }
+    
+    try {
         // Create a new window for printing
         const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            alert("Popup blocker may be preventing the print window. Please allow popups for this site.");
+            return;
+        }
         
         // Create clean HTML for printing
         printWindow.document.write(`
@@ -199,33 +205,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Wait for the content to load before printing
         printWindow.onload = function() {
+            console.log("Print window loaded, triggering print..."); // Debug message
             printWindow.print();
             // Uncomment the next line if you want the window to close after printing
             // printWindow.close();
         };
+    } catch (error) {
+        console.error("Error in print function:", error);
+        alert("There was an error preparing the print. Please try again.");
     }
-    
-    // Save Prayer Function
-    function savePrayer() {
-        const prayerContent = prayerText.innerHTML;
-        const topic = topicInput.value.trim();
-        
-        if (!prayerContent) {
-            alert('No prayer to save');
-            return;
-        }
-        
-        // Create a clean version of the prayer for saving
-        const cleanPrayer = `
-            <div class="saved-prayer">
-                <h2>Courts of Heaven Prayer</h2>
-                <h3>${topic}</h3>
-                <div class="prayer-content">
-                    ${prayerContent}
-                </div>
-                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
-            </div>
-        `;
+}
         
         // Get saved prayers or initialize empty array
         let savedPrayers = JSON.parse(localStorage.getItem('courtsPrayers')) || [];
