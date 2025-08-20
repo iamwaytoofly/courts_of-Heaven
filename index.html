@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courts of Heaven Prayer Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Courts of Heaven <span class="heavenly-accent">Prayer Generator</span></h1>
+            <p class="tagline">Approach God's throne with confidence and purpose</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="app-description">
+                <h2>What are the Courts of Heaven?</h2>
+                <p>The Courts of Heaven is a prayer model based on the biblical understanding that God's throne room operates as a divine courtroom. Just as earthly courts have protocols and procedures, approaching God's heavenly court involves specific spiritual elements that align with His Word.</p>
+                <p>This prayer generator creates personalized prayers following the Courts of Heaven model, incorporating scripture and maintaining a personal, compassionate tone as you present your petitions before God's throne.</p>
+            </div>
+
+            <div class="prayer-generator">
+                <h2 class="form-title">Generate Your Courts of Heaven Prayer</h2>
+                <form id="prayer-form">
+                    <div class="form-group">
+                        <label for="prayer-topic">What matter would you like to bring before God's court?</label>
+                        <input type="text" id="prayer-topic" placeholder="Enter your prayer topic or petition..." required>
+                    </div>
+                    <button type="button" id="generate-prayer" class="btn btn-block">
+                        <i class="fas fa-pray"></i> Generate Prayer
+                    </button>
+                </form>
+            </div>
+
+            <div id="prayer-output" class="prayer-output hidden">
+                <div class="prayer-content">
+                    <div class="prayer-header">
+                        <h3>Your Courts of Heaven Prayer</h3>
+                    </div>
+                    <div id="prayer-text" class="prayer-text">
+                        <!-- Prayer will be generated here -->
+                    </div>
+                    <div class="prayer-actions">
+                        <button id="save-prayer" class="btn">
+                            <i class="fas fa-heart"></i> Save Prayer
+                        </button>
+                        <button id="print-prayer" class="btn btn-secondary" onclick="window.print()">
+                            <i class="fas fa-print"></i> Print Prayer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saved-prayers">
+                <div class="saved-header">
+                    <h3>Your Saved Prayers</h3>
+                    <button id="clear-saved" class="btn btn-secondary">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+                <div id="saved-prayers-list">
+                    <!-- Saved prayers will be listed here -->
+                    <p class="empty-message">No saved prayers yet. Generate and save prayers to see them here.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>The Courts of Heaven Prayer Generator uses only public domain Bible verses to create personalized prayers. This tool is designed to enhance your prayer life and deepen your relationship with God.</p>
+            <p>&copy; 2025 | Created with faith and compassion</p>
+        </div>
+    </footer>
+
+    <script src="js/scriptures.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
