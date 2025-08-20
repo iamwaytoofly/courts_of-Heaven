@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Print Prayer Function
     function printPrayer() {
+        console.log("Print button clicked!"); // Debug message
         const topic = topicInput.value.trim();
         const prayerContent = prayerText.innerHTML;
         
@@ -110,73 +111,83 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Create a new window for printing
-        const printWindow = window.open('', '_blank');
-        
-        // Create clean HTML for printing
-        printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Courts of Heaven Prayer: ${topic}</title>
-                <style>
-                    body {
-                        font-family: 'Georgia', serif;
-                        line-height: 1.6;
-                        margin: 40px;
-                        color: #333;
-                    }
-                    h1 {
-                        text-align: center;
-                        margin-bottom: 30px;
-                        color: #3a5a7d;
-                    }
-                    h2 {
-                        text-align: center;
-                        font-style: italic;
-                        margin-bottom: 30px;
-                    }
-                    .prayer-section {
-                        margin-bottom: 20px;
-                    }
-                    .prayer-intro, .prayer-closing {
-                        font-style: italic;
-                        text-align: center;
-                        margin: 30px 0;
-                    }
-                    .prayer-footer {
-                        text-align: center;
-                        margin-top: 40px;
-                        font-size: 0.9em;
-                        color: #666;
-                    }
-                    @media print {
+        try {
+            // Create a new window for printing
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert("Popup blocker may be preventing the print window. Please allow popups for this site.");
+                return;
+            }
+            
+            // Create clean HTML for printing
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Courts of Heaven Prayer: ${topic}</title>
+                    <style>
                         body {
-                            margin: 0.5in;
+                            font-family: 'Georgia', serif;
+                            line-height: 1.6;
+                            margin: 40px;
+                            color: #333;
                         }
-                    }
-                </style>
-            </head>
-            <body>
-                <h1>Courts of Heaven Prayer</h1>
-                <h2>${topic}</h2>
-                <div class="prayer-content">
-                    ${prayerContent}
-                </div>
-                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
-            </body>
-            </html>
-        `);
-        
-        // Close the document for writing
-        printWindow.document.close();
-        
-        // Wait for the content to load before printing
-        printWindow.onload = function() {
-            printWindow.print();
-            // Uncomment the next line if you want the window to close after printing
-            // printWindow.close();
-        };
+                        h1 {
+                            text-align: center;
+                            margin-bottom: 30px;
+                            color: #3a5a7d;
+                        }
+                        h2 {
+                            text-align: center;
+                            font-style: italic;
+                            margin-bottom: 30px;
+                        }
+                        .prayer-section {
+                            margin-bottom: 20px;
+                        }
+                        .prayer-intro, .prayer-closing {
+                            font-style: italic;
+                            text-align: center;
+                            margin: 30px 0;
+                        }
+                        .prayer-footer {
+                            text-align: center;
+                            margin-top: 40px;
+                            font-size: 0.9em;
+                            color: #666;
+                        }
+                        @media print {
+                            body {
+                                margin: 0.5in;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Courts of Heaven Prayer</h1>
+                    <h2>${topic}</h2>
+                    <div class="prayer-content">
+                        ${prayerContent}
+                    </div>
+                    <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
+                </body>
+                </html>
+            `);
+            
+            // Close the document for writing
+            printWindow.document.close();
+            
+            // Wait for the content to load before printing
+            printWindow.onload = function() {
+                console.log("Print window loaded, triggering print..."); // Debug message
+                printWindow.print();
+                // Uncomment the next line if you want the window to close after printing
+                // printWindow.close();
+            };
+        } catch (error) {
+            console.error("Error in print function:", error);
+            alert("There was an error preparing the print. Please try again.");
+        }
     }
     
     // Save Prayer Function
