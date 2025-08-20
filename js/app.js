@@ -1,5 +1,5 @@
-// Enhanced Courts of Heaven Prayer App
-// Main application functionality with expanded prayer generation capabilities
+// Courts of Heaven Prayer App
+// Main application functionality
 
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('save-prayer');
     const savedPrayersList = document.getElementById('saved-prayers-list');
     const clearSavedBtn = document.getElementById('clear-saved');
+    const printBtn = document.getElementById('print-prayer');
     
     // Load saved prayers from localStorage
     loadSavedPrayers();
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     generateBtn.addEventListener('click', generatePrayer);
     saveBtn.addEventListener('click', savePrayer);
     clearSavedBtn.addEventListener('click', clearSavedPrayers);
+    printBtn.addEventListener('click', printPrayer);
     
     // Add form submit event listener for Enter key
     prayerForm.addEventListener('submit', function(event) {
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Generate prayer based on Courts of Heaven structure
-        const prayer = createEnhancedCourtsPrayer(topic);
+        const prayer = createCourtsPrayer(topic);
         
         // Display the prayer
         prayerText.innerHTML = prayer;
@@ -49,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         prayerOutput.scrollIntoView({ behavior: 'smooth' });
     }
     
-    // Enhanced Create Courts of Heaven Prayer
-    function createEnhancedCourtsPrayer(topic) {
+    // Create Courts of Heaven Prayer
+    function createCourtsPrayer(topic) {
         // Select random scripture for each section
         const approachVerse = getRandomItem(scriptures.approaching);
         const honorVerse = getRandomItem(scriptures.honoring);
@@ -65,42 +67,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const intro = getRandomItem(prayerIntros);
         const closing = getRandomItem(prayerClosings);
         
-        // Select random templates for each section
-        const approachingTemplate = getRandomItem(approachingTemplates || ["I stand before Your throne of grace with confidence, knowing that You welcome me into Your courts. As Your Word says, &quot;[VERSE]&quot; [REFERENCE]."]);
-        const honoringTemplate = getRandomItem(honoringTemplates || ["I honor You as the righteous Judge of all the earth, the King of Kings and Lord of Lords. &quot;[VERSE]&quot; [REFERENCE]. You alone are worthy of all praise and glory."]);
-        const confessionTemplate = getRandomItem(confessionTemplates || ["Before presenting my case, I confess any sin or iniquity in my life. I repent and turn away from anything that separates me from Your presence. Your Word promises, &quot;[VERSE]&quot; [REFERENCE]."]);
-        const presentingTemplate = getRandomItem(presentingTemplates || ["Lord, I bring before Your court my petition regarding [TOPIC]. I present this matter to You, knowing that &quot;[VERSE]&quot; [REFERENCE]. I ask for Your divine intervention and wisdom in this situation."]);
-        const silencingTemplate = getRandomItem(silencingTemplates || ["I silence every voice of the accuser that speaks against me in this matter. By the authority of Jesus Christ, I declare, &quot;[VERSE]&quot; [REFERENCE]. No weapon formed against me shall prosper."]);
-        const judgmentTemplate = getRandomItem(judgmentTemplates || ["Righteous Judge, I ask for Your divine judgment regarding [TOPIC]. Render Your verdict according to Your perfect will and justice. &quot;[VERSE]&quot; [REFERENCE]."]);
-        const verdictTemplate = getRandomItem(verdictTemplates || ["By faith, I receive Your verdict and decree over this situation. I trust in Your goodness and mercy, for &quot;[VERSE]&quot; [REFERENCE]. I accept Your decision with gratitude."]);
-        const angelsTemplate = getRandomItem(angelsTemplates || ["Lord, I ask that You dispatch Your angels to carry out Your verdict concerning [TOPIC]. Your Word declares, &quot;[VERSE]&quot; [REFERENCE]. Send them now to minister on my behalf."]);
-        
         // Build prayer with all 8 components
         let prayer = `<p class="prayer-intro">${intro}</p>`;
         
         // 1. Approaching God's throne
-        prayer += `<p class="prayer-section">${processTemplate(approachingTemplate, approachVerse.verse, approachVerse.reference)}</p>`;
+        prayer += `<p class="prayer-section">I stand before Your throne of grace with confidence, knowing that You welcome me into Your courts. As Your Word says, "<em>${approachVerse.verse}</em>" <strong>(${approachVerse.reference})</strong>.</p>`;
         
         // 2. Honoring Him
-        prayer += `<p class="prayer-section">${processTemplate(honoringTemplate, honorVerse.verse, honorVerse.reference)}</p>`;
+        prayer += `<p class="prayer-section">I honor You as the righteous Judge of all the earth, the King of Kings and Lord of Lords. "<em>${honorVerse.verse}</em>" <strong>(${honorVerse.reference})</strong>. You alone are worthy of all praise and glory.</p>`;
         
         // 3. Confession and repentance
-        prayer += `<p class="prayer-section">${processTemplate(confessionTemplate, confessionVerse.verse, confessionVerse.reference)}</p>`;
+        prayer += `<p class="prayer-section">Before presenting my case, I confess any sin or iniquity in my life. I repent and turn away from anything that separates me from Your presence. Your Word promises, "<em>${confessionVerse.verse}</em>" <strong>(${confessionVerse.reference})</strong>.</p>`;
         
         // 4. Presenting your case
-        prayer += `<p class="prayer-section">${processTemplate(presentingTemplate, presentingVerse.verse, presentingVerse.reference, topic)}</p>`;
+        prayer += `<p class="prayer-section">Lord, I bring before Your court my petition regarding <strong>${topic}</strong>. I present this matter to You, knowing that "<em>${presentingVerse.verse}</em>" <strong>(${presentingVerse.reference})</strong>. I ask for Your divine intervention and wisdom in this situation.</p>`;
         
         // 5. Silencing the accuser
-        prayer += `<p class="prayer-section">${processTemplate(silencingTemplate, silencingVerse.verse, silencingVerse.reference)}</p>`;
+        prayer += `<p class="prayer-section">I silence every voice of the accuser that speaks against me in this matter. By the authority of Jesus Christ, I declare, "<em>${silencingVerse.verse}</em>" <strong>(${silencingVerse.reference})</strong>. No weapon formed against me shall prosper.</p>`;
         
         // 6. Asking for judgment
-        prayer += `<p class="prayer-section">${processTemplate(judgmentTemplate, judgmentVerse.verse, judgmentVerse.reference, topic)}</p>`;
+        prayer += `<p class="prayer-section">Righteous Judge, I ask for Your divine judgment regarding <strong>${topic}</strong>. Render Your verdict according to Your perfect will and justice. "<em>${judgmentVerse.verse}</em>" <strong>(${judgmentVerse.reference})</strong>.</p>`;
         
         // 7. Receiving the verdict
-        prayer += `<p class="prayer-section">${processTemplate(verdictTemplate, verdictVerse.verse, verdictVerse.reference)}</p>`;
+        prayer += `<p class="prayer-section">By faith, I receive Your verdict and decree over this situation. I trust in Your goodness and mercy, for "<em>${verdictVerse.verse}</em>" <strong>(${verdictVerse.reference})</strong>. I accept Your decision with gratitude.</p>`;
         
         // 8. Dispatching angels
-        prayer += `<p class="prayer-section">${processTemplate(angelsTemplate, angelsVerse.verse, angelsVerse.reference, topic)}</p>`;
+        prayer += `<p class="prayer-section">Lord, I ask that You dispatch Your angels to carry out Your verdict concerning <strong>${topic}</strong>. Your Word declares, "<em>${angelsVerse.verse}</em>" <strong>(${angelsVerse.reference})</strong>. Send them now to minister on my behalf.</p>`;
         
         // Closing
         prayer += `<p class="prayer-closing">${closing}</p>`;
@@ -108,20 +100,83 @@ document.addEventListener('DOMContentLoaded', function() {
         return prayer;
     }
     
-    // Helper function to process templates
-    function processTemplate(template, verse, reference, topic = null) {
-        let processed = template;
+    // Print Prayer Function
+    function printPrayer() {
+        const topic = topicInput.value.trim();
+        const prayerContent = prayerText.innerHTML;
         
-        // Replace verse and reference placeholders
-        processed = processed.replace('[VERSE]', `<em>${verse}</em>`);
-        processed = processed.replace('[REFERENCE]', `<strong>(${reference})</strong>`);
-        
-        // Replace topic placeholder if provided
-        if (topic) {
-            processed = processed.replace('[TOPIC]', `<strong>${topic}</strong>`);
+        if (!prayerContent) {
+            alert('No prayer to print');
+            return;
         }
         
-        return processed;
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        
+        // Create clean HTML for printing
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Courts of Heaven Prayer: ${topic}</title>
+                <style>
+                    body {
+                        font-family: 'Georgia', serif;
+                        line-height: 1.6;
+                        margin: 40px;
+                        color: #333;
+                    }
+                    h1 {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        color: #3a5a7d;
+                    }
+                    h2 {
+                        text-align: center;
+                        font-style: italic;
+                        margin-bottom: 30px;
+                    }
+                    .prayer-section {
+                        margin-bottom: 20px;
+                    }
+                    .prayer-intro, .prayer-closing {
+                        font-style: italic;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    .prayer-footer {
+                        text-align: center;
+                        margin-top: 40px;
+                        font-size: 0.9em;
+                        color: #666;
+                    }
+                    @media print {
+                        body {
+                            margin: 0.5in;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Courts of Heaven Prayer</h1>
+                <h2>${topic}</h2>
+                <div class="prayer-content">
+                    ${prayerContent}
+                </div>
+                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
+            </body>
+            </html>
+        `);
+        
+        // Close the document for writing
+        printWindow.document.close();
+        
+        // Wait for the content to load before printing
+        printWindow.onload = function() {
+            printWindow.print();
+            // Uncomment the next line if you want the window to close after printing
+            // printWindow.close();
+        };
     }
     
     // Save Prayer Function
@@ -134,13 +189,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Create a clean version of the prayer for saving
+        const cleanPrayer = `
+            <div class="saved-prayer">
+                <h2>Courts of Heaven Prayer</h2>
+                <h3>${topic}</h3>
+                <div class="prayer-content">
+                    ${prayerContent}
+                </div>
+                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
+            </div>
+        `;
+        
         // Get saved prayers or initialize empty array
         let savedPrayers = JSON.parse(localStorage.getItem('courtsPrayers')) || [];
         
         // Add new prayer with timestamp
         savedPrayers.push({
             topic: topic,
-            content: prayerContent,
+            content: cleanPrayer,
             date: new Date().toLocaleDateString()
         });
         
@@ -223,47 +290,4 @@ document.addEventListener('DOMContentLoaded', function() {
     function getRandomItem(array) {
         return array[Math.floor(Math.random() * array.length)];
     }
-
-    // Calculate potential prayer variations
-    function calculatePrayerVariations() {
-        // Count the number of variations for each component
-        const approachingCount = scriptures.approaching.length;
-        const honoringCount = scriptures.honoring.length;
-        const confessionCount = scriptures.confession.length;
-        const presentingCount = scriptures.presenting.length;
-        const silencingCount = scriptures.silencing.length;
-        const judgmentCount = scriptures.judgment.length;
-        const verdictCount = scriptures.verdict.length;
-        const angelsCount = scriptures.angels.length;
-        const introsCount = prayerIntros.length;
-        const closingsCount = prayerClosings.length;
-        
-        // Count the number of templates for each section (if available)
-        const approachingTemplateCount = approachingTemplates ? approachingTemplates.length : 1;
-        const honoringTemplateCount = honoringTemplates ? honoringTemplates.length : 1;
-        const confessionTemplateCount = confessionTemplates ? confessionTemplates.length : 1;
-        const presentingTemplateCount = presentingTemplates ? presentingTemplates.length : 1;
-        const silencingTemplateCount = silencingTemplates ? silencingTemplates.length : 1;
-        const judgmentTemplateCount = judgmentTemplates ? judgmentTemplates.length : 1;
-        const verdictTemplateCount = verdictTemplates ? verdictTemplates.length : 1;
-        const angelsTemplateCount = angelsTemplates ? angelsTemplates.length : 1;
-        
-        // Calculate total possible combinations
-        const totalVariations = 
-            approachingCount * approachingTemplateCount *
-            honoringCount * honoringTemplateCount *
-            confessionCount * confessionTemplateCount *
-            presentingCount * presentingTemplateCount *
-            silencingCount * silencingTemplateCount *
-            judgmentCount * judgmentTemplateCount *
-            verdictCount * verdictTemplateCount *
-            angelsCount * angelsTemplateCount *
-            introsCount * closingsCount;
-        
-        console.log(`This prayer generator can create approximately ${totalVariations.toLocaleString()} unique prayer variations.`);
-        return totalVariations;
-    }
-    
-    // Calculate and log the number of possible prayer variations
-    calculatePrayerVariations();
 });
