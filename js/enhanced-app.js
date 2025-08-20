@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('save-prayer');
     const savedPrayersList = document.getElementById('saved-prayers-list');
     const clearSavedBtn = document.getElementById('clear-saved');
+    const printBtn = document.getElementById('print-prayer');
     
     // Load saved prayers from localStorage
     loadSavedPrayers();
@@ -19,14 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
     generateBtn.addEventListener('click', generatePrayer);
     saveBtn.addEventListener('click', savePrayer);
     clearSavedBtn.addEventListener('click', clearSavedPrayers);
-
-    // Add this code after your existing event listeners
-    prayerForm.addEventListener('submit', function(event) {
-    // Prevent the default form submission
-    event.preventDefault();
+    printBtn.addEventListener('click', printPrayer);
     
-    // Call the same function that the button click calls
-    generatePrayer();
+    // Add form submit event listener for Enter key
+    prayerForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        
+        // Call the generatePrayer function
+        generatePrayer();
     });
     
     // Generate Prayer Function
@@ -124,6 +126,85 @@ document.addEventListener('DOMContentLoaded', function() {
         return processed;
     }
     
+    // Print Prayer Function
+    function printPrayer() {
+        const topic = topicInput.value.trim();
+        const prayerContent = prayerText.innerHTML;
+        
+        if (!prayerContent) {
+            alert('No prayer to print');
+            return;
+        }
+        
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        
+        // Create clean HTML for printing
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Courts of Heaven Prayer: ${topic}</title>
+                <style>
+                    body {
+                        font-family: 'Georgia', serif;
+                        line-height: 1.6;
+                        margin: 40px;
+                        color: #333;
+                    }
+                    h1 {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        color: #3a5a7d;
+                    }
+                    h2 {
+                        text-align: center;
+                        font-style: italic;
+                        margin-bottom: 30px;
+                    }
+                    .prayer-section {
+                        margin-bottom: 20px;
+                    }
+                    .prayer-intro, .prayer-closing {
+                        font-style: italic;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    .prayer-footer {
+                        text-align: center;
+                        margin-top: 40px;
+                        font-size: 0.9em;
+                        color: #666;
+                    }
+                    @media print {
+                        body {
+                            margin: 0.5in;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Courts of Heaven Prayer</h1>
+                <h2>${topic}</h2>
+                <div class="prayer-content">
+                    ${prayerContent}
+                </div>
+                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
+            </body>
+            </html>
+        `);
+        
+        // Close the document for writing
+        printWindow.document.close();
+        
+        // Wait for the content to load before printing
+        printWindow.onload = function() {
+            printWindow.print();
+            // Uncomment the next line if you want the window to close after printing
+            // printWindow.close();
+        };
+    }
+    
     // Save Prayer Function
     function savePrayer() {
         const prayerContent = prayerText.innerHTML;
@@ -134,13 +215,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Create a clean version of the prayer for saving
+        const cleanPrayer = `
+            <div class="saved-prayer">
+                <h2>Courts of Heaven Prayer</h2>
+                <h3>${topic}</h3>
+                <div class="prayer-content">
+                    ${prayerContent}
+                </div>
+                <p class="prayer-footer">Generated on ${new Date().toLocaleDateString()}</p>
+            </div>
+        `;
+        
         // Get saved prayers or initialize empty array
         let savedPrayers = JSON.parse(localStorage.getItem('courtsPrayers')) || [];
         
         // Add new prayer with timestamp
         savedPrayers.push({
             topic: topic,
-            content: prayerContent,
+            content: cleanPrayer,
             date: new Date().toLocaleDateString()
         });
         
