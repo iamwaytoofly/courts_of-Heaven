@@ -1,0 +1,166 @@
+/* Enhanced Courts of Heaven Prayer App Styles */
+
+:root {
+    --primary-color: #3a5a7d;
+    --secondary-color: #c9b37e;
+    --accent-color: #d4af37;
+    --light-color: #f5f5f5;
+    --dark-color: #333;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --enhanced-color: #5a7d9d;
+    --enhanced-accent: #e5c87e;
+}
+
+/* Enhancement-specific styles */
+.enhancement-note {
+    background-color: rgba(58, 90, 125, 0.1);
+    border-left: 4px solid var(--accent-color);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.enhancement-note p {
+    margin: 0;
+    font-style: italic;
+}
+
+.enhancement-note strong {
+    color: var(--enhanced-color);
+}
+
+/* Prayer section styling enhancements */
+.prayer-section {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.prayer-section:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--accent-color), var(--enhanced-accent));
+    border-radius: 2px;
+}
+
+.prayer-intro, .prayer-closing {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--enhanced-color);
+    text-align: center;
+    margin: 25px 0;
+}
+
+/* Scripture reference styling */
+.prayer-section em {
+    font-style: italic;
+    color: var(--dark-color);
+}
+
+.prayer-section strong {
+    font-weight: 600;
+    color: var(--enhanced-color);
+}
+
+/* Header enhancement */
+header {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-color), var(--enhanced-color));
+}
+
+header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--accent-color), var(--enhanced-accent), var(--accent-color));
+}
+
+.heavenly-accent {
+    background: linear-gradient(to right, var(--accent-color), var(--enhanced-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline;
+}
+
+/* Button enhancements */
+.btn {
+    background: linear-gradient(to right, var(--primary-color), var(--enhanced-color));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+    background: linear-gradient(to right, var(--secondary-color), var(--enhanced-accent));
+}
+
+/* Prayer card enhancements */
+.saved-prayer-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.saved-prayer-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer enhancement */
+footer {
+    background: linear-gradient(to right, var(--primary-color), var(--enhanced-color));
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .prayer-intro, .prayer-closing {
+        font-size: 1.1rem;
+    }
+    
+    .prayer-section {
+        padding-left: 15px;
+    }
+}
+
+/* Print styles */
+@media print {
+    header, .prayer-generator, .saved-prayers, footer, .prayer-actions {
+        display: none;
+    }
+    
+    .prayer-output {
+        display: block !important;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .prayer-content {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .prayer-text {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+    
+    .prayer-section:before {
+        display: none;
+    }
+}
